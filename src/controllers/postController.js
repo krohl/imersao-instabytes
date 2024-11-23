@@ -35,7 +35,7 @@ export async function uploadImage(req, res) {
 
 export async function updatePost(req, res) {
     const id = req.params.id;
-    const url = `http://localhost:3000/${id}.png`;
+    const url = `https://imersao-instabytes-222262699991.southamerica-east1.run.app/${id}.png`;
     try {
         const post = {
             description: await generateDescriptionWithGemini(fs.readFileSync(`uploads/${id}.png`)),
@@ -50,5 +50,3 @@ export async function updatePost(req, res) {
         res.status(500).json({ error: "Error creating post!" });
     }
 }
-
-

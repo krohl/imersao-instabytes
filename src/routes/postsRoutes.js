@@ -4,7 +4,7 @@ import { createPost, getPosts, updatePost, uploadImage } from "../controllers/po
 import cors from "cors";
 
 const corsOptions = {
-    origin: 'http://localhost:8000',
+    origin: 'https://frontend-instabytes.vercel.app',
     optionsSuccessStatus: 200
 }
 
