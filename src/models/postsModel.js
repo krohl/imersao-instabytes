@@ -10,6 +10,14 @@ export default class PostsModel {
         return collection.find().toArray();
     }
 
+    async getPost(id) {
+        const db = connection.db('instabytes');
+        const collection = db.collection('posts');
+
+        const objId = ObjectId.createFromHexString(id);
+        return collection.findOne({ _id: objId });
+    }
+
     async createPost(post) {
         const db = connection.db('instabytes');
         const collection = db.collection('posts');
