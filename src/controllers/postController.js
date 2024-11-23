@@ -44,7 +44,7 @@ export async function updatePost(req, res) {
         const id = req.params.id;
 
         const ext = (await model.getPost(id)).ext;
-        const url = `https://imersao-instabytes-222262699991.southamerica-east1.run.app/${id}.${ext}`;
+        const url = `http://localhost:3000/${id}.${ext}`;
         const description = await generateDescriptionWithGemini(fs.readFileSync(`uploads/${id}.${ext}`));
         const post = {
             description: description,
