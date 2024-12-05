@@ -1,10 +1,12 @@
+import cors from "cors";
 import express from "express";
 import multer from "multer";
-import { createPost, getPosts, updatePost, uploadImage } from "../controllers/postController.js";
-import cors from "cors";
+import { deletePost, getPosts, updatePost, uploadImage } from "../controllers/postController.js";
+import { getUserProfileImage, login, setUserProfileImage } from "../controllers/usersController.js";
+import authenticateToken from "../middleware/authMiddleware.js";
 
 const corsOptions = {
-    origin: 'https://frontend-instabytes.vercel.app',
+    origin: ['http://localhost:8000', 'http://localhost:4200', 'https://frontend-instabytes.vercel.app'],
     optionsSuccessStatus: 200
 }
 
@@ -23,13 +25,21 @@ const routes = (app) => {
     app.use(express.json());
     app.use(cors(corsOptions));
 
-    app.get('/posts', getPosts);
+    app.get('/posts', authenticateToken, getPosts);
 
-    app.post('/posts', createPost);
+    app.delete('/posts/:id', authenticateToken, deletePost);
 
-    app.post('/upload', uploads.single('image'), uploadImage);
+    app.post('/upload', authenticateToken, uploads.single('image'), uploadImage);
 
-    app.put('/upload/:id', updatePost);
+    app.put('/upload/:id', authenticateToken, updatePost);
+
+    // app.post('/cadastrar', createUser);
+
+    app.post('/login', login);
+
+    app.get('/user/profile/image', authenticateToken, getUserProfileImage);
+
+    app.post('/user/profile/image', authenticateToken, uploads.single('image'), setUserProfileImage);
 }
 
 export default routes;
