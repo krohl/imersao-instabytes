@@ -30,7 +30,6 @@ export async function createUser(req, res) {
 
 export async function login(req, res) {
     try {
-        console.log(req.body.email);
         const user = await new UsersModel().getUserByEmail(req.body.email);
         if (!user) {
             res.status(404).json({ message: "User not found" });
@@ -59,7 +58,7 @@ export async function getUserProfileImage(req, res) {
         const storageService = new StorageService();
         const file = storageService.getFile(`${req.user.id}/logo.png`);
         const [fileExists] = await file.exists();
-        console.log(fileExists);
+
         const url = fileExists ? await storageService.getUrl('logo.png', req.user.id) : null;
         res.status(200).json({ url });
     } catch (err) {
