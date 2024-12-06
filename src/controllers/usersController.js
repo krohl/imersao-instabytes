@@ -53,14 +53,18 @@ export async function login(req, res) {
 }
 
 
-export async function getUserProfileImage(req, res) {
+export async function getUserProfileInfo(req, res) {
     try {
+        const user = await new UsersModel().getUserById(req.user.id);
+        const nickname = user.nickname;
+
         const storageService = new StorageService();
         const file = storageService.getFile(`${req.user.id}/logo.png`);
         const [fileExists] = await file.exists();
 
         const url = fileExists ? await storageService.getUrl('logo.png', req.user.id) : null;
-        res.status(200).json({ url });
+
+        res.status(200).json({ url, nickname });
     } catch (err) {
         console.log(err.message);
         res.status(500).json({

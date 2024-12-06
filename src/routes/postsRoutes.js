@@ -2,7 +2,7 @@ import cors from "cors";
 import express from "express";
 import multer from "multer";
 import { deletePost, getPosts, updatePost, uploadImage } from "../controllers/postController.js";
-import { getUserProfileImage, login, setUserProfileImage } from "../controllers/usersController.js";
+import { getUserProfileInfo, login, setUserProfileImage } from "../controllers/usersController.js";
 import authenticateToken from "../middleware/authMiddleware.js";
 
 const corsOptions = {
@@ -37,7 +37,7 @@ const routes = (app) => {
 
     app.post('/login', login);
 
-    app.get('/user/profile/image', authenticateToken, getUserProfileImage);
+    app.get('/user/profile/info', authenticateToken, getUserProfileInfo);
 
     app.post('/user/profile/image', authenticateToken, uploads.single('image'), setUserProfileImage);
 }
